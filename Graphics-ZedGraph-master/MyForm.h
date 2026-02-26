@@ -6,6 +6,7 @@
 #include <functional>
 
 #define STEPS 100
+#define K_COUNT 4
 
 namespace Graph {
 
@@ -30,23 +31,23 @@ namespace Graph {
 			//TODO: Add the constructor code here
 			//
 		}
-		static float f3(float x, float u) {
+		static double f3(double x, double u) {
 			return -7.0 / 2.0 * u;
 		}
 
-		static float f4(float x, float u) {
+		static double f4(double x, double u) {
 			return 5 * u;
 		}
 
-		static float f3_pervoobr(float x) {
+		static double f3_pervoobr(double x) {
 			return exp(-7.0/2.0 * x);
 		}
 
-		static float f5(float x, std::vector<float> u) {
+		static double f5(double x, std::vector<double> u) {
 			return 2 * x;
 		}
 
-		static float f6(float x, std::vector<float> u) {
+		static double f6(double x, std::vector<double> u) {
 			return 3 * x * x;
 		}
 
@@ -120,19 +121,30 @@ namespace Graph {
 	private: System::Windows::Forms::Label^ label18;
 	private: System::Windows::Forms::TextBox^ textBox18;
 	private: System::Windows::Forms::DataGridView^ dataGridView2;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn1;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn2;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn3;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn4;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn5;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn6;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn7;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn8;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn9;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn10;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn11;
+
+
+
+
+
+
+
+
+
+
+
 	private: System::Windows::Forms::Button^ button4;
 	private: ZedGraph::ZedGraphControl^ zedGraphControl2;
+private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn1;
+private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn2;
+private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn3;
+private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn4;
+private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn5;
+private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn6;
+private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn7;
+private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn8;
+private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn9;
+private: System::Windows::Forms::TextBox^ textBox19;
+private: System::Windows::Forms::Label^ label19;
 
 
 
@@ -238,6 +250,8 @@ namespace Graph {
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->zedGraphControl1 = (gcnew ZedGraph::ZedGraphControl());
 			this->tabPage2 = (gcnew System::Windows::Forms::TabPage());
+			this->textBox19 = (gcnew System::Windows::Forms::TextBox());
+			this->label19 = (gcnew System::Windows::Forms::Label());
 			this->checkBox1 = (gcnew System::Windows::Forms::CheckBox());
 			this->textBox10 = (gcnew System::Windows::Forms::TextBox());
 			this->label10 = (gcnew System::Windows::Forms::Label());
@@ -268,8 +282,6 @@ namespace Graph {
 			this->dataGridViewTextBoxColumn7 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->dataGridViewTextBoxColumn8 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->dataGridViewTextBoxColumn9 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->dataGridViewTextBoxColumn10 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->dataGridViewTextBoxColumn11 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->button4 = (gcnew System::Windows::Forms::Button());
 			this->zedGraphControl2 = (gcnew ZedGraph::ZedGraphControl());
 			this->tabControl1->SuspendLayout();
@@ -327,6 +339,8 @@ namespace Graph {
 			// checkBox2
 			// 
 			this->checkBox2->AutoSize = true;
+			this->checkBox2->Checked = true;
+			this->checkBox2->CheckState = System::Windows::Forms::CheckState::Checked;
 			this->checkBox2->Location = System::Drawing::Point(313, 423);
 			this->checkBox2->Name = L"checkBox2";
 			this->checkBox2->Size = System::Drawing::Size(57, 17);
@@ -598,6 +612,8 @@ namespace Graph {
 			// 
 			// tabPage2
 			// 
+			this->tabPage2->Controls->Add(this->textBox19);
+			this->tabPage2->Controls->Add(this->label19);
 			this->tabPage2->Controls->Add(this->checkBox1);
 			this->tabPage2->Controls->Add(this->textBox10);
 			this->tabPage2->Controls->Add(this->label10);
@@ -629,9 +645,28 @@ namespace Graph {
 			this->tabPage2->Text = L"Основное задание";
 			this->tabPage2->UseVisualStyleBackColor = true;
 			// 
+			// textBox19
+			// 
+			this->textBox19->Location = System::Drawing::Point(255, 424);
+			this->textBox19->Name = L"textBox19";
+			this->textBox19->Size = System::Drawing::Size(61, 20);
+			this->textBox19->TabIndex = 71;
+			this->textBox19->Text = L"0,1";
+			// 
+			// label19
+			// 
+			this->label19->AutoSize = true;
+			this->label19->Location = System::Drawing::Point(236, 428);
+			this->label19->Name = L"label19";
+			this->label19->Size = System::Drawing::Size(21, 13);
+			this->label19->TabIndex = 70;
+			this->label19->Text = L"u\'0";
+			// 
 			// checkBox1
 			// 
 			this->checkBox1->AutoSize = true;
+			this->checkBox1->Checked = true;
+			this->checkBox1->CheckState = System::Windows::Forms::CheckState::Checked;
 			this->checkBox1->Location = System::Drawing::Point(305, 452);
 			this->checkBox1->Name = L"checkBox1";
 			this->checkBox1->Size = System::Drawing::Size(57, 17);
@@ -807,11 +842,10 @@ namespace Graph {
 			this->dataGridView2->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
 			this->dataGridView2->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dataGridView2->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(11) {
+			this->dataGridView2->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(9) {
 				this->dataGridViewTextBoxColumn1,
 					this->dataGridViewTextBoxColumn2, this->dataGridViewTextBoxColumn3, this->dataGridViewTextBoxColumn4, this->dataGridViewTextBoxColumn5,
-					this->dataGridViewTextBoxColumn6, this->dataGridViewTextBoxColumn7, this->dataGridViewTextBoxColumn8, this->dataGridViewTextBoxColumn9,
-					this->dataGridViewTextBoxColumn10, this->dataGridViewTextBoxColumn11
+					this->dataGridViewTextBoxColumn6, this->dataGridViewTextBoxColumn7, this->dataGridViewTextBoxColumn8, this->dataGridViewTextBoxColumn9
 			});
 			this->dataGridView2->Location = System::Drawing::Point(540, 40);
 			this->dataGridView2->Name = L"dataGridView2";
@@ -869,16 +903,6 @@ namespace Graph {
 			this->dataGridViewTextBoxColumn9->HeaderText = L"C2";
 			this->dataGridViewTextBoxColumn9->Name = L"dataGridViewTextBoxColumn9";
 			// 
-			// dataGridViewTextBoxColumn10
-			// 
-			this->dataGridViewTextBoxColumn10->HeaderText = L"U";
-			this->dataGridViewTextBoxColumn10->Name = L"dataGridViewTextBoxColumn10";
-			// 
-			// dataGridViewTextBoxColumn11
-			// 
-			this->dataGridViewTextBoxColumn11->HeaderText = L"|U-V|";
-			this->dataGridViewTextBoxColumn11->Name = L"dataGridViewTextBoxColumn11";
-			// 
 			// button4
 			// 
 			this->button4->Location = System::Drawing::Point(391, 445);
@@ -933,25 +957,150 @@ namespace Graph {
 
 
 
-		std::pair<float, float> small_RG4(float x, float u, std::function<float(float, float)> f, float h) {
-			float prev_x = x;
-			float prev_u = u;
-			float new_x = prev_x + h;
+		std::pair<double, double> small_RG4(double x, double u, std::function<double(double, double)> f, double h) {
+			double prev_x = x;
+			double prev_u = u;
+			double new_x = prev_x + h;
 
-			float k1 = f(prev_x, prev_u);
-			float k2 = f(prev_x + h / 2.0, prev_u + h / 2.0 * k1);
-			float k3 = f(prev_x + h / 2.0, prev_u + h / 2.0 * k2);
-			float k4 = f(prev_x + h, prev_u + h * k3);
-			float new_u = prev_u + h / 6.0 * (k1 + 2 * k2 + 2 * k3 + k4);
+			double k1 = f(prev_x, prev_u);
+			double k2 = f(prev_x + h / 2.0, prev_u + h / 2.0 * k1);
+			double k3 = f(prev_x + h / 2.0, prev_u + h / 2.0 * k2);
+			double k4 = f(prev_x + h, prev_u + h * k3);
+			double new_u = prev_u + h / 6.0 * (k1 + 2 * k2 + 2 * k3 + k4);
 
 			return { new_x, new_u };
 		}
 
-		std::vector<std::tuple<double, double, double, double, double, double, double, double>> RG4_fixd(float x0, float u0, std::function<float(float, float)> f, float h, float E, int Nmax, float b, float b_epsilon) {
-			std::vector<float> x(1, x0);
-			std::vector<float> u(1, u0);
+		std::pair<double, std::vector<double>> small_RG4_system(double x, std::vector<double> u,
+			const std::vector<std::function<double(double, std::vector<double>)>>& f,
+			double h) {
+			double prev_x = x;
+			std::vector<double> prev_u = u;
+			double new_x = prev_x + h;
+
+			size_t m = u.size();
+			std::vector<std::vector<double>> k(K_COUNT, std::vector<double>(m, 0.0f));
+
+			// k1
+			for (int i = 0; i < m; i++) {
+				k[0][i] = f[i](prev_x, prev_u);
+			}
+
+			// k2
+			std::vector<double> u_plus_k1(m);
+			for (int i = 0; i < m; i++) {
+				u_plus_k1[i] = prev_u[i] + h / 2.0f * k[0][i];
+			}
+			for (int i = 0; i < m; i++) {
+				k[1][i] = f[i](prev_x + h / 2.0f, u_plus_k1);
+			}
+
+			// k3
+			std::vector<double> u_plus_k2(m);
+			for (int i = 0; i < m; i++) {
+				u_plus_k2[i] = prev_u[i] + h / 2.0f * k[1][i];
+			}
+			for (int i = 0; i < m; i++) {
+				k[2][i] = f[i](prev_x + h / 2.0f, u_plus_k2);
+			}
+
+			// k4
+			std::vector<double> u_plus_k3(m);
+			for (int i = 0; i < m; i++) {
+				u_plus_k3[i] = prev_u[i] + h * k[2][i];
+			}
+			for (int i = 0; i < m; i++) {
+				k[3][i] = f[i](prev_x + h, u_plus_k3);
+			}
+
+			// new_u
+			std::vector<double> new_u(m);
+			for (int i = 0; i < m; i++) {
+				new_u[i] = prev_u[i] + h / 6.0f * (k[0][i] + 2 * k[1][i] + 2 * k[2][i] + k[3][i]);
+			}
+
+			return { new_x, new_u };
+		}
+
+		std::vector<std::tuple<double, double, double, double, double, double, double, double>> RG4_fixed_system(double x0, std::vector<double> u0, const std::vector<std::function<double(double, std::vector<double>)>>& f, double h, double E, int Nmax, double b, double b_epsilon) {
+			std::vector<double> x(1, x0);
+			std::vector<std::vector<double>> u(1, u0);
 			std::vector<std::tuple<double, double, double, double, double, double, double, double>> res;
-			// std::vector<std::pair<float, float>> res;
+
+			int division_count = 0;
+			int mult_count = 0;
+
+			bool overflow = false;
+
+			for (int step = 1; step <= Nmax; step++) {
+				auto res_with_h = small_RG4_system(x[step - 1], u[step - 1], f, h);
+				double new_x = res_with_h.first;
+				std::vector<double> new_u = res_with_h.second;
+
+				auto res_with_half_h1 = small_RG4_system(x[step - 1], u[step - 1], f, h / 2.0);
+				auto res_with_half_h2 = small_RG4_system(res_with_half_h1.first, res_with_half_h1.second, f, h / 2.0);
+
+				double precise_new_x = res_with_half_h2.first;
+				auto precise_new_u = res_with_half_h2.second; // на 0 индексе самая функция u
+
+				double S = (precise_new_u[0] - new_u[0]) / (16 - 1);
+
+				if (new_x > b) {
+					overflow = true;
+					new_x -= h;
+					h = abs(b - new_x); // abs() на всякий случай
+					step--;
+					continue;
+				}
+
+				if (overflow && new_x >= b - b_epsilon) {
+					if ((new_x - x[step - 1]) < 1e-9) {
+						break;
+					}
+					std::tuple<double, double, double, double, double, double, double, double> stats{
+					new_x, // xi
+					new_u[0], // vi
+					precise_new_u[0], // v2i
+					new_u[0] - precise_new_u[0], // vi - v2i
+					16 * S, // ОЛП
+					h, // hi
+					division_count, // C1
+					mult_count // C2
+					};
+
+					res.push_back(stats);
+					break;
+				}
+
+				x.push_back(new_x);
+				u.push_back(new_u);
+
+
+				std::tuple<double, double, double, double, double, double, double, double> stats{
+					new_x, // xi
+					new_u[0], // vi
+					precise_new_u[0], // v2i
+					new_u[0] - precise_new_u[0], // vi - v2i
+					16 * S, // ОЛП
+					h, // hi
+					division_count, // C1
+					mult_count // C2
+				};
+
+				res.push_back(stats);
+				division_count = 0;
+				mult_count = 0;
+				// res.push_back({ x[step], u[step] });
+			}
+
+			return res;
+		}
+
+		std::vector<std::tuple<double, double, double, double, double, double, double, double>> RG4_fixd(double x0, double u0, std::function<double(double, double)> f, double h, double E, int Nmax, double b, double b_epsilon) {
+			std::vector<double> x(1, x0);
+			std::vector<double> u(1, u0);
+			std::vector<std::tuple<double, double, double, double, double, double, double, double>> res;
+			// std::vector<std::pair<double, double>> res;
 
 			int division_count = 0;
 			int mult_count = 0;
@@ -960,25 +1109,29 @@ namespace Graph {
 
 			for (int step = 1; step <= Nmax; step++) {
 				auto res_with_h = small_RG4(x[step - 1], u[step - 1], f, h);
-				float new_x = res_with_h.first;
-				float new_u = res_with_h.second;
+				double new_x = res_with_h.first;
+				double new_u = res_with_h.second;
 
 				auto res_with_half_h1 = small_RG4(x[step - 1], u[step - 1], f, h / 2.0);
 				auto res_with_half_h2 = small_RG4(res_with_half_h1.first, res_with_half_h1.second, f, h / 2.0);
 
-				float precise_new_x = res_with_half_h2.first;
-				float precise_new_u = res_with_half_h2.second;
+				double precise_new_x = res_with_half_h2.first;
+				double precise_new_u = res_with_half_h2.second;
 
-				float S = (precise_new_u - new_u) / (16 - 1);
+				double S = (precise_new_u - new_u) / (16 - 1);
 
 				if (new_x > b) {
+					new_x -= h;
+					h = abs(b - new_x);
 					overflow = true;
-					h /= 2.0;
 					step--;
 					continue;
 				}
 
 				if (overflow && new_x >= b - b_epsilon) {
+					if ((new_x - x[step - 1]) < 1e-9) {
+						break;
+					}
 					std::tuple<double, double, double, double, double, double, double, double> stats{
 					new_x, // xi
 					new_u, // vi
@@ -1016,37 +1169,44 @@ namespace Graph {
 			return res;
 		}
 
-		//						xi,      vi,    v2i, vi - v2i, ОЛП,       hi,    C1,      C2
-		std::vector<std::tuple<double, double, double, double, double, double, double, double>> RG4_adaptive(float x0, float u0, std::function<float(float, float)> f, float h, float E, int Nmax, float b, float b_epsilon) {
-			std::vector<float> x(1, x0);
-			std::vector<float> u(1, u0);
+		std::vector<std::tuple<double, double, double, double, double, double, double, double>> RG4_adaptive_system(double x0, std::vector<double> u0, const std::vector<std::function<double(double, std::vector<double>)>>& f, double h, double E, int Nmax, double b, double b_epsilon) {
+			std::vector<double> x(1, x0);
+			std::vector<std::vector<double>> u(1, u0);
 			std::vector<std::tuple<double, double, double, double, double, double, double, double>> res;
-			// std::vector<std::pair<float, float>> res;
+
 
 			int division_count = 0;
 			int mult_count = 0;
 
 			bool overflow = false;
 
-			for (int step = 1; step <= Nmax; step++) {
-				auto res_with_h = small_RG4(x[step - 1], u[step - 1], f, h);
-				float new_x = res_with_h.first;
-				float new_u = res_with_h.second;
+			int iters = 0;
+			for (int step = 1; step <= STEPS; step++) {
+				iters++;
+				if (iters > 100000) {
+					break;
+				}
+				auto res_with_h = small_RG4_system(x[step - 1], u[step - 1], f, h);
+				double new_x = res_with_h.first;
+				std::vector<double> new_u = res_with_h.second;
 
-				auto res_with_half_h1 = small_RG4(x[step - 1], u[step - 1], f, h / 2.0);
-				auto res_with_half_h2 = small_RG4(res_with_half_h1.first, res_with_half_h1.second, f, h / 2.0);
+				auto res_with_half_h1 = small_RG4_system(x[step - 1], u[step - 1], f, h / 2.0);
+				auto res_with_half_h2 = small_RG4_system(res_with_half_h1.first, res_with_half_h1.second, f, h / 2.0);
 
-				float precise_new_x = res_with_half_h2.first;
-				float precise_new_u = res_with_half_h2.second;
+				double precise_new_x = res_with_half_h2.first;
+				std::vector<double> precise_new_u = res_with_half_h2.second;
 
-				float S = (precise_new_u - new_u) / (16 - 1);
-				if (abs(S) > E) {
+				double S = abs(precise_new_u[0] - new_u[0]) / (16 - 1);
+				for (int i = 1; i < precise_new_u.size(); i++) {
+					S = std::max(S, abs(precise_new_u[i] - new_u[i]) / (16 - 1));
+				}
+
+				if (S > E) {
 					h /= 2.0; // >> 1
 					division_count++;
 					step--;
 					continue;
 				}
-
 
 				if (new_x > b) {
 					overflow = true;
@@ -1057,6 +1217,92 @@ namespace Graph {
 				}
 
 				if (overflow && new_x >= b - b_epsilon) {
+					std::tuple<double, double, double, double, double, double, double, double> stats{
+					new_x, // xi
+					new_u[0], // vi
+					precise_new_u[0], // v2i
+					new_u[0] - precise_new_u[0], // vi - v2i
+					16 * S, // ОЛП
+					h, // hi
+					division_count, // C1
+					mult_count // C2
+					};
+
+					res.push_back(stats);
+					break;
+				}
+
+				if (S < E / 32) { // E >> 5
+					h *= 2.0; // << 1
+				}
+
+
+				x.push_back(new_x);
+				u.push_back(new_u);
+
+				std::tuple<double, double, double, double, double, double, double, double> stats{
+					new_x, // xi
+					new_u[0], // vi
+					precise_new_u[0], // v2i
+					new_u[0] - precise_new_u[0], // vi - v2i
+					16 * S, // ОЛП
+					h, // hi
+					division_count, // C1
+					mult_count // C2
+				};
+
+				res.push_back(stats);
+				division_count = 0;
+				mult_count = 0;
+			}
+
+			return res;
+		}
+
+		//						xi,      vi,    v2i, vi - v2i, ОЛП,       hi,    C1,      C2
+		std::vector<std::tuple<double, double, double, double, double, double, double, double>> RG4_adaptive(double x0, double u0, std::function<double(double, double)> f, double h, double E, int Nmax, double b, double b_epsilon) {
+			std::vector<double> x(1, x0);
+			std::vector<double> u(1, u0);
+			std::vector<std::tuple<double, double, double, double, double, double, double, double>> res;
+			// std::vector<std::pair<double, double>> res;
+
+			int division_count = 0;
+			int mult_count = 0;
+
+			bool overflow = false;
+
+			for (int step = 1; step <= Nmax; step++) {
+				auto res_with_h = small_RG4(x[step - 1], u[step - 1], f, h);
+				double new_x = res_with_h.first;
+				double new_u = res_with_h.second;
+
+				auto res_with_half_h1 = small_RG4(x[step - 1], u[step - 1], f, h / 2.0);
+				auto res_with_half_h2 = small_RG4(res_with_half_h1.first, res_with_half_h1.second, f, h / 2.0);
+
+				double precise_new_x = res_with_half_h2.first;
+				double precise_new_u = res_with_half_h2.second;
+
+				double S = (precise_new_u - new_u) / (16 - 1);
+				if (abs(S) > E) {
+					h /= 2.0; // >> 1
+					division_count++;
+					step--;
+					continue;
+				}
+
+
+				if (new_x > b) {
+					overflow = true;
+					new_x -= h;
+					h = b - new_x;
+					step--;
+					continue;
+				}
+
+				if (overflow && new_x >= b - b_epsilon) {
+					if ((new_x - x[step - 1]) < 1e-9) {
+						break;
+					}
 					std::tuple<double, double, double, double, double, double, double, double> stats{
 					new_x, // xi
 					new_u, // vi
@@ -1128,10 +1374,10 @@ namespace Graph {
 		std::vector<std::tuple<double, double, double, double, double, double, double, double>> vect2;
 
 		if (fixed_h) {
-			vect2 = RG4_fixd(x0, u0, f3, 0.01f, E, Nmax, xmax, b_epsilon);
+			vect2 = RG4_fixd(x0, u0, f3, h, E, Nmax, xmax, b_epsilon);
 		}
 		else {
-			vect2 = RG4_adaptive(x0, u0, f3, 0.01f, E, Nmax, xmax, b_epsilon);
+			vect2 = RG4_adaptive(x0, u0, f3, h, E, Nmax, xmax, b_epsilon);
 		}
 
 		int i = 0;
@@ -1142,8 +1388,8 @@ namespace Graph {
 			++step;
 			//
 
-			float x = std::get<0>(p);
-			float v = std::get<1>(p);
+			double x = std::get<0>(p);
+			double v = std::get<1>(p);
 			f1_list->Add(x, v);
 			//f2_list->Add(x, f2(x));
 			//
@@ -1180,7 +1426,7 @@ namespace Graph {
 			i++;
 		}
 		*/
-		LineItem Curve1 = panel->AddCurve("F1(x)", f1_list, Color::Red,SymbolType::Plus);
+		LineItem Curve1 = panel->AddCurve("Approximate solution", f1_list, Color::Red,SymbolType::Plus);
 		//LineItem Curve2 = panel->AddCurve("F2(x)", f2_list, Color::Blue, SymbolType::None);
 
 		// Óñòàíàâëèâàåì èíòåðåñóþùèé íàñ èíòåðâàë ïî îñè X
@@ -1233,8 +1479,8 @@ private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e
 	double h = Convert::ToDouble(textBox16->Text);
 
 	double E = Convert::ToDouble(textBox13->Text);
-	int Nmax = Convert::ToInt32(textBox8->Text);
-	double b_epsilon = Convert::ToDouble(textBox11->Text);
+	int Nmax = Convert::ToInt32(textBox11->Text);
+	double b_epsilon = Convert::ToDouble(textBox10->Text);
 
 
 	double xmin_limit = xmin - 0.1;
@@ -1242,16 +1488,35 @@ private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e
 
 	double x0 = 0;
 	double u0 = Convert::ToDouble(textBox12->Text);
+	double u_deriv0 = Convert::ToDouble(textBox19->Text);
+
+	std::vector<double> f_system0;
+	f_system0.push_back(u0);
+	f_system0.push_back(u_deriv0);
+
+	std::vector<std::function<double(double, std::vector<double>)>> f_system;
+	f_system.push_back(f5);
+	f_system.push_back(f6);
 
 	bool fixed_h = checkBox1->Checked;
 
 	std::vector<std::tuple<double, double, double, double, double, double, double, double>> vect2;
 
 	if (fixed_h) {
-		vect2 = RG4_fixd(x0, u0, f3, 0.01f, E, Nmax, xmax, b_epsilon);
+		vect2 = RG4_fixed_system(x0, f_system0, f_system,
+			static_cast<double>(h),
+			static_cast<double>(E),
+			Nmax,
+			static_cast<double>(xmax),
+			static_cast<double>(b_epsilon));
 	}
 	else {
-		vect2 = RG4_adaptive(x0, u0, f3, 0.01f, E, Nmax, xmax, b_epsilon);
+		vect2 = RG4_adaptive_system(x0, f_system0, f_system,
+			static_cast<double>(h),
+			static_cast<double>(E),
+			Nmax,
+			static_cast<double>(xmax),
+			static_cast<double>(b_epsilon));
 	}
 
 	int i = 0;
@@ -1262,8 +1527,8 @@ private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e
 		++step;
 		//
 
-		float x = std::get<0>(p);
-		float v = std::get<1>(p);
+		double x = std::get<0>(p);
+		double v = std::get<1>(p);
 		f1_list->Add(x, v);
 		//f2_list->Add(x, f2(x));
 		//
@@ -1279,8 +1544,7 @@ private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e
 	dataGridView2->Rows[i]->Cells[7]->Value = std::get<6>(p);
 	dataGridView2->Rows[i]->Cells[8]->Value = std::get<7>(p);
 
-	dataGridView2->Rows[i]->Cells[9]->Value = f3_pervoobr(x);
-	dataGridView2->Rows[i]->Cells[10]->Value = abs(f3_pervoobr(x) - v);
+
 
 
 		//dataGridView1->Rows[i]->Cells[2]->Value = floor(f2(x) * 1000) / 1000;
@@ -1300,7 +1564,7 @@ private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e
 		i++;
 	}
 	*/
-	LineItem Curve1 = panel->AddCurve("F1(x)", f1_list, Color::Red, SymbolType::Plus);
+	LineItem Curve1 = panel->AddCurve("Approximate solution", f1_list, Color::Red, SymbolType::Plus);
 	//LineItem Curve2 = panel->AddCurve("F2(x)", f2_list, Color::Blue, SymbolType::None);
 
 	// Óñòàíàâëèâàåì èíòåðåñóþùèé íàñ èíòåðâàë ïî îñè X
