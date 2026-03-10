@@ -7,6 +7,8 @@
 
 #define STEPS 100
 #define K_COUNT 4
+double k_zvezda = 2.0;
+double c = 0.15;
 
 namespace Graph {
 
@@ -49,6 +51,18 @@ namespace Graph {
 
 		static double f6(double x, std::vector<double> u) {
 			return 3 * x * x;
+		}
+
+		static double u_derivative(double x, std::vector<double> funcs) {
+			return funcs[1]; // funcs[0] = u; funcs[1] = z = u';
+		}
+
+		static double z_derivative(double x, std::vector<double> funcs) {
+			double k = 2.0;
+
+			double m = 0.01;
+			double res = -c / m * funcs[1] - k / m * funcs[0] - k_zvezda / m * funcs[0] * funcs[0] * funcs[0];
+			return res;
 		}
 
 	protected:
@@ -178,6 +192,19 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ Column2;
 private: System::Windows::Forms::DataGridViewTextBoxColumn^ Column5;
 private: System::Windows::Forms::DataGridViewTextBoxColumn^ Column6;
 private: System::Windows::Forms::RichTextBox^ richTextBox2;
+private: System::Windows::Forms::TabControl^ tabControl2;
+private: System::Windows::Forms::TabPage^ tabPage3;
+private: System::Windows::Forms::TabPage^ tabPage4;
+private: ZedGraph::ZedGraphControl^ zedGraphControl4;
+private: System::Windows::Forms::GroupBox^ groupBox1;
+private: System::Windows::Forms::TextBox^ textBox20;
+private: System::Windows::Forms::Label^ label20;
+private: System::Windows::Forms::TextBox^ textBox21;
+private: System::Windows::Forms::Label^ label21;
+private: System::Windows::Forms::TabPage^ tabPage5;
+private: ZedGraph::ZedGraphControl^ zedGraphControl3;
+
+
 
 
 
@@ -380,6 +407,17 @@ private: System::Windows::Forms::RichTextBox^ richTextBox2;
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->zedGraphControl1 = (gcnew ZedGraph::ZedGraphControl());
 			this->tabPage2 = (gcnew System::Windows::Forms::TabPage());
+			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+			this->textBox21 = (gcnew System::Windows::Forms::TextBox());
+			this->label21 = (gcnew System::Windows::Forms::Label());
+			this->textBox20 = (gcnew System::Windows::Forms::TextBox());
+			this->label20 = (gcnew System::Windows::Forms::Label());
+			this->tabControl2 = (gcnew System::Windows::Forms::TabControl());
+			this->tabPage3 = (gcnew System::Windows::Forms::TabPage());
+			this->zedGraphControl2 = (gcnew ZedGraph::ZedGraphControl());
+			this->tabPage4 = (gcnew System::Windows::Forms::TabPage());
+			this->zedGraphControl4 = (gcnew ZedGraph::ZedGraphControl());
+			this->tabPage5 = (gcnew System::Windows::Forms::TabPage());
 			this->richTextBox2 = (gcnew System::Windows::Forms::RichTextBox());
 			this->textBox19 = (gcnew System::Windows::Forms::TextBox());
 			this->label19 = (gcnew System::Windows::Forms::Label());
@@ -414,11 +452,16 @@ private: System::Windows::Forms::RichTextBox^ richTextBox2;
 			this->dataGridViewTextBoxColumn8 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->dataGridViewTextBoxColumn9 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->button4 = (gcnew System::Windows::Forms::Button());
-			this->zedGraphControl2 = (gcnew ZedGraph::ZedGraphControl());
+			this->zedGraphControl3 = (gcnew ZedGraph::ZedGraphControl());
 			this->tabControl1->SuspendLayout();
 			this->tabPage1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->tabPage2->SuspendLayout();
+			this->groupBox1->SuspendLayout();
+			this->tabControl2->SuspendLayout();
+			this->tabPage3->SuspendLayout();
+			this->tabPage4->SuspendLayout();
+			this->tabPage5->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView2))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -432,7 +475,7 @@ private: System::Windows::Forms::RichTextBox^ richTextBox2;
 			this->tabControl1->Location = System::Drawing::Point(12, 12);
 			this->tabControl1->Name = L"tabControl1";
 			this->tabControl1->SelectedIndex = 0;
-			this->tabControl1->Size = System::Drawing::Size(1084, 684);
+			this->tabControl1->Size = System::Drawing::Size(1433, 684);
 			this->tabControl1->TabIndex = 0;
 			// 
 			// tabPage1
@@ -464,7 +507,7 @@ private: System::Windows::Forms::RichTextBox^ richTextBox2;
 			this->tabPage1->Location = System::Drawing::Point(4, 22);
 			this->tabPage1->Name = L"tabPage1";
 			this->tabPage1->Padding = System::Windows::Forms::Padding(3);
-			this->tabPage1->Size = System::Drawing::Size(1076, 658);
+			this->tabPage1->Size = System::Drawing::Size(1425, 658);
 			this->tabPage1->TabIndex = 0;
 			this->tabPage1->Text = L"Тестовое задание";
 			this->tabPage1->UseVisualStyleBackColor = true;
@@ -557,7 +600,7 @@ private: System::Windows::Forms::RichTextBox^ richTextBox2;
 			this->textBox6->Name = L"textBox6";
 			this->textBox6->Size = System::Drawing::Size(80, 20);
 			this->textBox6->TabIndex = 38;
-			this->textBox6->Text = L"0,000001";
+			this->textBox6->Text = L"0,001";
 			// 
 			// textBox4
 			// 
@@ -668,7 +711,7 @@ private: System::Windows::Forms::RichTextBox^ richTextBox2;
 			dataGridViewCellStyle4->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Regular,
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
 			dataGridViewCellStyle4->ForeColor = System::Drawing::SystemColors::ControlText;
-			dataGridViewCellStyle4->Format = L"F6";
+			dataGridViewCellStyle4->Format = L"F10";
 			dataGridViewCellStyle4->SelectionBackColor = System::Drawing::SystemColors::Highlight;
 			dataGridViewCellStyle4->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
 			dataGridViewCellStyle4->WrapMode = System::Windows::Forms::DataGridViewTriState::False;
@@ -678,7 +721,7 @@ private: System::Windows::Forms::RichTextBox^ richTextBox2;
 			this->dataGridView1->RowHeadersVisible = false;
 			dataGridViewCellStyle5->NullValue = nullptr;
 			this->dataGridView1->RowsDefaultCellStyle = dataGridViewCellStyle5;
-			this->dataGridView1->Size = System::Drawing::Size(522, 327);
+			this->dataGridView1->Size = System::Drawing::Size(871, 327);
 			this->dataGridView1->TabIndex = 26;
 			// 
 			// i
@@ -776,6 +819,8 @@ private: System::Windows::Forms::RichTextBox^ richTextBox2;
 			// 
 			// tabPage2
 			// 
+			this->tabPage2->Controls->Add(this->groupBox1);
+			this->tabPage2->Controls->Add(this->tabControl2);
 			this->tabPage2->Controls->Add(this->richTextBox2);
 			this->tabPage2->Controls->Add(this->textBox19);
 			this->tabPage2->Controls->Add(this->label19);
@@ -801,14 +846,132 @@ private: System::Windows::Forms::RichTextBox^ richTextBox2;
 			this->tabPage2->Controls->Add(this->textBox18);
 			this->tabPage2->Controls->Add(this->dataGridView2);
 			this->tabPage2->Controls->Add(this->button4);
-			this->tabPage2->Controls->Add(this->zedGraphControl2);
 			this->tabPage2->Location = System::Drawing::Point(4, 22);
 			this->tabPage2->Name = L"tabPage2";
 			this->tabPage2->Padding = System::Windows::Forms::Padding(3);
-			this->tabPage2->Size = System::Drawing::Size(1076, 658);
+			this->tabPage2->Size = System::Drawing::Size(1425, 658);
 			this->tabPage2->TabIndex = 1;
 			this->tabPage2->Text = L"Основное задание";
 			this->tabPage2->UseVisualStyleBackColor = true;
+			// 
+			// groupBox1
+			// 
+			this->groupBox1->Controls->Add(this->textBox21);
+			this->groupBox1->Controls->Add(this->label21);
+			this->groupBox1->Controls->Add(this->textBox20);
+			this->groupBox1->Controls->Add(this->label20);
+			this->groupBox1->Location = System::Drawing::Point(540, 482);
+			this->groupBox1->Name = L"groupBox1";
+			this->groupBox1->Size = System::Drawing::Size(296, 100);
+			this->groupBox1->TabIndex = 76;
+			this->groupBox1->TabStop = false;
+			this->groupBox1->Text = L"Параметры дифференциального уравнения:";
+			// 
+			// textBox21
+			// 
+			this->textBox21->Location = System::Drawing::Point(122, 19);
+			this->textBox21->Name = L"textBox21";
+			this->textBox21->Size = System::Drawing::Size(61, 20);
+			this->textBox21->TabIndex = 80;
+			this->textBox21->Text = L"0,15";
+			// 
+			// label21
+			// 
+			this->label21->AutoSize = true;
+			this->label21->Location = System::Drawing::Point(103, 23);
+			this->label21->Name = L"label21";
+			this->label21->Size = System::Drawing::Size(13, 13);
+			this->label21->TabIndex = 79;
+			this->label21->Text = L"c";
+			// 
+			// textBox20
+			// 
+			this->textBox20->Location = System::Drawing::Point(29, 19);
+			this->textBox20->Name = L"textBox20";
+			this->textBox20->Size = System::Drawing::Size(61, 20);
+			this->textBox20->TabIndex = 78;
+			this->textBox20->Text = L"2,0";
+			// 
+			// label20
+			// 
+			this->label20->AutoSize = true;
+			this->label20->Location = System::Drawing::Point(10, 23);
+			this->label20->Name = L"label20";
+			this->label20->Size = System::Drawing::Size(17, 13);
+			this->label20->TabIndex = 77;
+			this->label20->Text = L"k*";
+			// 
+			// tabControl2
+			// 
+			this->tabControl2->Controls->Add(this->tabPage3);
+			this->tabControl2->Controls->Add(this->tabPage4);
+			this->tabControl2->Controls->Add(this->tabPage5);
+			this->tabControl2->Location = System::Drawing::Point(22, 27);
+			this->tabControl2->Name = L"tabControl2";
+			this->tabControl2->SelectedIndex = 0;
+			this->tabControl2->Size = System::Drawing::Size(511, 350);
+			this->tabControl2->TabIndex = 74;
+			// 
+			// tabPage3
+			// 
+			this->tabPage3->Controls->Add(this->zedGraphControl2);
+			this->tabPage3->Location = System::Drawing::Point(4, 22);
+			this->tabPage3->Name = L"tabPage3";
+			this->tabPage3->Padding = System::Windows::Forms::Padding(3);
+			this->tabPage3->Size = System::Drawing::Size(503, 324);
+			this->tabPage3->TabIndex = 0;
+			this->tabPage3->Text = L"График u(x)";
+			this->tabPage3->UseVisualStyleBackColor = true;
+			// 
+			// zedGraphControl2
+			// 
+			this->zedGraphControl2->Location = System::Drawing::Point(0, 0);
+			this->zedGraphControl2->Name = L"zedGraphControl2";
+			this->zedGraphControl2->ScrollGrace = 0;
+			this->zedGraphControl2->ScrollMaxX = 0;
+			this->zedGraphControl2->ScrollMaxY = 0;
+			this->zedGraphControl2->ScrollMaxY2 = 0;
+			this->zedGraphControl2->ScrollMinX = 0;
+			this->zedGraphControl2->ScrollMinY = 0;
+			this->zedGraphControl2->ScrollMinY2 = 0;
+			this->zedGraphControl2->Size = System::Drawing::Size(503, 324);
+			this->zedGraphControl2->TabIndex = 47;
+			// 
+			// tabPage4
+			// 
+			this->tabPage4->Controls->Add(this->zedGraphControl4);
+			this->tabPage4->Location = System::Drawing::Point(4, 22);
+			this->tabPage4->Name = L"tabPage4";
+			this->tabPage4->Padding = System::Windows::Forms::Padding(3);
+			this->tabPage4->Size = System::Drawing::Size(503, 324);
+			this->tabPage4->TabIndex = 1;
+			this->tabPage4->Text = L"Фазовый портрет";
+			this->tabPage4->UseVisualStyleBackColor = true;
+			// 
+			// zedGraphControl4
+			// 
+			this->zedGraphControl4->Location = System::Drawing::Point(0, 0);
+			this->zedGraphControl4->Name = L"zedGraphControl4";
+			this->zedGraphControl4->ScrollGrace = 0;
+			this->zedGraphControl4->ScrollMaxX = 0;
+			this->zedGraphControl4->ScrollMaxY = 0;
+			this->zedGraphControl4->ScrollMaxY2 = 0;
+			this->zedGraphControl4->ScrollMinX = 0;
+			this->zedGraphControl4->ScrollMinY = 0;
+			this->zedGraphControl4->ScrollMinY2 = 0;
+			this->zedGraphControl4->Size = System::Drawing::Size(503, 324);
+			this->zedGraphControl4->TabIndex = 48;
+			// 
+			// tabPage5
+			// 
+			this->tabPage5->Controls->Add(this->zedGraphControl3);
+			this->tabPage5->Location = System::Drawing::Point(4, 22);
+			this->tabPage5->Name = L"tabPage5";
+			this->tabPage5->Padding = System::Windows::Forms::Padding(3);
+			this->tabPage5->Size = System::Drawing::Size(503, 324);
+			this->tabPage5->TabIndex = 2;
+			this->tabPage5->Text = L"График u\'(x)";
+			this->tabPage5->UseVisualStyleBackColor = true;
 			// 
 			// richTextBox2
 			// 
@@ -826,7 +989,7 @@ private: System::Windows::Forms::RichTextBox^ richTextBox2;
 			this->textBox19->Name = L"textBox19";
 			this->textBox19->Size = System::Drawing::Size(61, 20);
 			this->textBox19->TabIndex = 71;
-			this->textBox19->Text = L"0,1";
+			this->textBox19->Text = L"0";
 			// 
 			// label19
 			// 
@@ -872,7 +1035,7 @@ private: System::Windows::Forms::RichTextBox^ richTextBox2;
 			this->textBox11->Name = L"textBox11";
 			this->textBox11->Size = System::Drawing::Size(61, 20);
 			this->textBox11->TabIndex = 66;
-			this->textBox11->Text = L"20";
+			this->textBox11->Text = L"250";
 			// 
 			// label11
 			// 
@@ -889,7 +1052,7 @@ private: System::Windows::Forms::RichTextBox^ richTextBox2;
 			this->textBox12->Name = L"textBox12";
 			this->textBox12->Size = System::Drawing::Size(61, 20);
 			this->textBox12->TabIndex = 64;
-			this->textBox12->Text = L"0,1";
+			this->textBox12->Text = L"10";
 			// 
 			// label12
 			// 
@@ -915,7 +1078,7 @@ private: System::Windows::Forms::RichTextBox^ richTextBox2;
 			this->textBox13->Name = L"textBox13";
 			this->textBox13->Size = System::Drawing::Size(80, 20);
 			this->textBox13->TabIndex = 61;
-			this->textBox13->Text = L"0,000001";
+			this->textBox13->Text = L"0,01";
 			// 
 			// textBox14
 			// 
@@ -967,7 +1130,7 @@ private: System::Windows::Forms::RichTextBox^ richTextBox2;
 			this->textBox16->Name = L"textBox16";
 			this->textBox16->Size = System::Drawing::Size(61, 20);
 			this->textBox16->TabIndex = 55;
-			this->textBox16->Text = L"0,1";
+			this->textBox16->Text = L"0,01";
 			// 
 			// label16
 			// 
@@ -984,7 +1147,7 @@ private: System::Windows::Forms::RichTextBox^ richTextBox2;
 			this->textBox17->Name = L"textBox17";
 			this->textBox17->Size = System::Drawing::Size(49, 20);
 			this->textBox17->TabIndex = 53;
-			this->textBox17->Text = L"1";
+			this->textBox17->Text = L"2,0";
 			// 
 			// label17
 			// 
@@ -1029,7 +1192,7 @@ private: System::Windows::Forms::RichTextBox^ richTextBox2;
 			dataGridViewCellStyle9->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Regular,
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
 			dataGridViewCellStyle9->ForeColor = System::Drawing::SystemColors::ControlText;
-			dataGridViewCellStyle9->Format = L"F6";
+			dataGridViewCellStyle9->Format = L"F10";
 			dataGridViewCellStyle9->SelectionBackColor = System::Drawing::SystemColors::Highlight;
 			dataGridViewCellStyle9->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
 			dataGridViewCellStyle9->WrapMode = System::Windows::Forms::DataGridViewTriState::False;
@@ -1037,7 +1200,7 @@ private: System::Windows::Forms::RichTextBox^ richTextBox2;
 			this->dataGridView2->Location = System::Drawing::Point(540, 40);
 			this->dataGridView2->Name = L"dataGridView2";
 			this->dataGridView2->RowHeadersVisible = false;
-			this->dataGridView2->Size = System::Drawing::Size(530, 327);
+			this->dataGridView2->Size = System::Drawing::Size(879, 327);
 			this->dataGridView2->TabIndex = 49;
 			// 
 			// dataGridViewTextBoxColumn1
@@ -1105,25 +1268,25 @@ private: System::Windows::Forms::RichTextBox^ richTextBox2;
 			this->button4->UseVisualStyleBackColor = true;
 			this->button4->Click += gcnew System::EventHandler(this, &MyForm::button4_Click);
 			// 
-			// zedGraphControl2
+			// zedGraphControl3
 			// 
-			this->zedGraphControl2->Location = System::Drawing::Point(15, 40);
-			this->zedGraphControl2->Name = L"zedGraphControl2";
-			this->zedGraphControl2->ScrollGrace = 0;
-			this->zedGraphControl2->ScrollMaxX = 0;
-			this->zedGraphControl2->ScrollMaxY = 0;
-			this->zedGraphControl2->ScrollMaxY2 = 0;
-			this->zedGraphControl2->ScrollMinX = 0;
-			this->zedGraphControl2->ScrollMinY = 0;
-			this->zedGraphControl2->ScrollMinY2 = 0;
-			this->zedGraphControl2->Size = System::Drawing::Size(501, 327);
-			this->zedGraphControl2->TabIndex = 47;
+			this->zedGraphControl3->Location = System::Drawing::Point(0, 0);
+			this->zedGraphControl3->Name = L"zedGraphControl3";
+			this->zedGraphControl3->ScrollGrace = 0;
+			this->zedGraphControl3->ScrollMaxX = 0;
+			this->zedGraphControl3->ScrollMaxY = 0;
+			this->zedGraphControl3->ScrollMaxY2 = 0;
+			this->zedGraphControl3->ScrollMinX = 0;
+			this->zedGraphControl3->ScrollMinY = 0;
+			this->zedGraphControl3->ScrollMinY2 = 0;
+			this->zedGraphControl3->Size = System::Drawing::Size(503, 324);
+			this->zedGraphControl3->TabIndex = 48;
 			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(1108, 708);
+			this->ClientSize = System::Drawing::Size(1457, 708);
 			this->Controls->Add(this->tabControl1);
 			this->Name = L"MyForm";
 			this->Text = L"x";
@@ -1133,6 +1296,12 @@ private: System::Windows::Forms::RichTextBox^ richTextBox2;
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
 			this->tabPage2->ResumeLayout(false);
 			this->tabPage2->PerformLayout();
+			this->groupBox1->ResumeLayout(false);
+			this->groupBox1->PerformLayout();
+			this->tabControl2->ResumeLayout(false);
+			this->tabPage3->ResumeLayout(false);
+			this->tabPage4->ResumeLayout(false);
+			this->tabPage5->ResumeLayout(false);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView2))->EndInit();
 			this->ResumeLayout(false);
 
@@ -1213,11 +1382,11 @@ private: System::Windows::Forms::RichTextBox^ richTextBox2;
 
 			return { new_x, new_u };
 		}
-
-		std::vector<std::tuple<double, double, double, double, double, double, double, double>> RG4_fixed_system(double x0, std::vector<double> u0, const std::vector<std::function<double(double, std::vector<double>)>>& f, double h, double E, int Nmax, double b, double b_epsilon) {
+		//						xi,      vi,    v2i, vi - v2i, ОЛП,       hi,    C1,      C2,    u'
+		std::vector<std::tuple<double, double, double, double, double, double, double, double, double>> RG4_fixed_system(double x0, std::vector<double> u0, const std::vector<std::function<double(double, std::vector<double>)>>& f, double h, double E, int Nmax, double b, double b_epsilon) {
 			std::vector<double> x(1, x0);
 			std::vector<std::vector<double>> u(1, u0);
-			std::vector<std::tuple<double, double, double, double, double, double, double, double>> res;
+			std::vector<std::tuple<double, double, double, double, double, double, double, double, double>> res;
 
 			int division_count = 0;
 			int mult_count = 0;
@@ -1249,7 +1418,7 @@ private: System::Windows::Forms::RichTextBox^ richTextBox2;
 					if ((new_x - x[step - 1]) < 1e-9) {
 						break;
 					}
-					std::tuple<double, double, double, double, double, double, double, double> stats{
+					std::tuple<double, double, double, double, double, double, double, double, double> stats{
 					new_x, // xi
 					new_u[0], // vi
 					precise_new_u[0], // v2i
@@ -1257,7 +1426,8 @@ private: System::Windows::Forms::RichTextBox^ richTextBox2;
 					16 * S, // ОЛП
 					h, // hi
 					division_count, // C1
-					mult_count // C2
+					mult_count, // C2
+					new_u[1]
 					};
 
 					res.push_back(stats);
@@ -1268,7 +1438,7 @@ private: System::Windows::Forms::RichTextBox^ richTextBox2;
 				u.push_back(new_u);
 
 
-				std::tuple<double, double, double, double, double, double, double, double> stats{
+				std::tuple<double, double, double, double, double, double, double, double, double> stats{
 					new_x, // xi
 					new_u[0], // vi
 					precise_new_u[0], // v2i
@@ -1276,13 +1446,18 @@ private: System::Windows::Forms::RichTextBox^ richTextBox2;
 					16 * S, // ОЛП
 					h, // hi
 					division_count, // C1
-					mult_count // C2
+					mult_count, // C2
+					new_u[1]
 				};
 
 				res.push_back(stats);
 				division_count = 0;
 				mult_count = 0;
 				// res.push_back({ x[step], u[step] });
+
+				if (new_x >= b - b_epsilon) {
+					break;
+				}
 			}
 
 			return res;
@@ -1356,15 +1531,19 @@ private: System::Windows::Forms::RichTextBox^ richTextBox2;
 				res.push_back(stats);
 				division_count = 0;
 				mult_count = 0;
+
+				if (new_x >= b - b_epsilon) {
+					break;
+				}
 			}
 
 			return res;
 		}
-
-		std::vector<std::tuple<double, double, double, double, double, double, double, double>> RG4_adaptive_system(double x0, std::vector<double> u0, const std::vector<std::function<double(double, std::vector<double>)>>& f, double h, double E, int Nmax, double b, double b_epsilon) {
+		//						xi,      vi,    v2i, vi - v2i, ОЛП,       hi,    C1,      C2,    u'
+		std::vector<std::tuple<double, double, double, double, double, double, double, double, double>> RG4_adaptive_system(double x0, std::vector<double> u0, const std::vector<std::function<double(double, std::vector<double>)>>& f, double h, double E, int Nmax, double b, double b_epsilon) {
 			std::vector<double> x(1, x0);
 			std::vector<std::vector<double>> u(1, u0);
-			std::vector<std::tuple<double, double, double, double, double, double, double, double>> res;
+			std::vector<std::tuple<double, double, double, double, double, double, double, double, double>> res;
 
 
 			int division_count = 0;
@@ -1373,7 +1552,7 @@ private: System::Windows::Forms::RichTextBox^ richTextBox2;
 			bool overflow = false;
 
 			int iters = 0;
-			for (int step = 1; step <= STEPS; step++) {
+			for (int step = 1; step <= Nmax; step++) {
 				iters++;
 				if (iters > 100000) {
 					break;
@@ -1401,15 +1580,18 @@ private: System::Windows::Forms::RichTextBox^ richTextBox2;
 				}
 
 				if (new_x > b) {
+					new_x -= h;
+					h = abs(b - new_x);
 					overflow = true;
-					h /= 2.0;
-					division_count++;
 					step--;
 					continue;
 				}
 
 				if (overflow && new_x >= b - b_epsilon) {
-					std::tuple<double, double, double, double, double, double, double, double> stats{
+					if ((new_x - x[step - 1]) < 1e-9) {
+						break;
+					}
+					std::tuple<double, double, double, double, double, double, double, double, double> stats{
 					new_x, // xi
 					new_u[0], // vi
 					precise_new_u[0], // v2i
@@ -1417,7 +1599,8 @@ private: System::Windows::Forms::RichTextBox^ richTextBox2;
 					16 * S, // ОЛП
 					h, // hi
 					division_count, // C1
-					mult_count // C2
+					mult_count, // C2
+					new_u[1]
 					};
 
 					res.push_back(stats);
@@ -1426,13 +1609,14 @@ private: System::Windows::Forms::RichTextBox^ richTextBox2;
 
 				if (S < E / 32) { // E >> 5
 					h *= 2.0; // << 1
+					mult_count++;
 				}
 
 
 				x.push_back(new_x);
 				u.push_back(new_u);
 
-				std::tuple<double, double, double, double, double, double, double, double> stats{
+				std::tuple<double, double, double, double, double, double, double, double, double> stats{
 					new_x, // xi
 					new_u[0], // vi
 					precise_new_u[0], // v2i
@@ -1440,12 +1624,17 @@ private: System::Windows::Forms::RichTextBox^ richTextBox2;
 					16 * S, // ОЛП
 					h, // hi
 					division_count, // C1
-					mult_count // C2
+					mult_count, // C2
+					new_u[1] // u'
 				};
 
 				res.push_back(stats);
 				division_count = 0;
 				mult_count = 0;
+
+				if (new_x >= b - b_epsilon) {
+					break;
+				}
 			}
 
 			return res;
@@ -1532,6 +1721,10 @@ private: System::Windows::Forms::RichTextBox^ richTextBox2;
 				res.push_back(stats);
 				division_count = 0;
 				mult_count = 0;
+
+				if (new_x >= b - b_epsilon) {
+					break;
+				}
 			}
 
 			return res;
@@ -1562,7 +1755,7 @@ private: System::Windows::Forms::RichTextBox^ richTextBox2;
 		double u0 = Convert::ToDouble(textBox7->Text);
 
 		bool fixed_h = checkBox2->Checked;
-
+		//						xi,      vi,    v2i, vi - v2i, ОЛП,       hi,    C1,      C2
 		std::vector<std::tuple<double, double, double, double, double, double, double, double>> vect2;
 
 		if (fixed_h) {
@@ -1575,6 +1768,8 @@ private: System::Windows::Forms::RichTextBox^ richTextBox2;
 		int i = 0;
 		dataGridView1->Rows->Clear();
 		int step = 0;
+		f1_list->Add(x0, u0);
+		f2_list->Add(x0, f3_pervoobr(x0));
 		//      xi,      vi,    v2i, vi - v2i, ОЛП,       hi,    C1,      C2
 		for (auto& p : vect2)
 		{
@@ -1661,12 +1856,12 @@ private: System::Windows::Forms::RichTextBox^ richTextBox2;
 		richTextBox1->Clear();
 		richTextBox1->AppendText(String::Format(L"n = {0:F0}\r\n", step));
 		richTextBox1->AppendText(String::Format(L"b - x_n = {0:F6}\r\n", border_diff));
-		richTextBox1->AppendText(String::Format(L"max |ОЛП| = {0:F6}\r\n", max_OLP));
+		richTextBox1->AppendText(String::Format(L"max |ОЛП| = {0:F10}\r\n", max_OLP));
 		richTextBox1->AppendText(String::Format(L"Общее число удвоений шага = {0:F0}\r\n", total_mult));
 		richTextBox1->AppendText(String::Format(L"Общее число делений шага = {0:F0}\r\n", total_div));
 		richTextBox1->AppendText(String::Format(L"max h_i = {0:F6} при x = {1:F6}\r\n", max_h, max_h_x));
 		richTextBox1->AppendText(String::Format(L"min h_i = {0:F6} при x = {1:F6}\r\n", min_h, min_h_x));
-		richTextBox1->AppendText(String::Format(L"max |u_i - v_i| = {0:F6} при x = {1:F6}", max_u_minus_v, max_u_minus_v_x));
+		richTextBox1->AppendText(String::Format(L"max |u_i - v_i| = {0:F10} при x = {1:F6}", max_u_minus_v, max_u_minus_v_x));
 
 	}
 	private: System::Void zedGraphControl1_Load(System::Object^  sender, System::EventArgs^  e) {
@@ -1692,8 +1887,11 @@ private: System::Void button2_Click(System::Object^  sender, System::EventArgs^ 
 
 private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e) {
 	GraphPane^ panel = zedGraphControl2->GraphPane;
+	GraphPane^ panel_der = zedGraphControl3->GraphPane;
 	panel->CurveList->Clear();
+	panel_der->CurveList->Clear();
 	PointPairList^ f1_list = gcnew ZedGraph::PointPairList();
+	PointPairList^ f2_list = gcnew ZedGraph::PointPairList();
 	//PointPairList^ f2_list = gcnew ZedGraph::PointPairList();
 
 	//
@@ -1719,12 +1917,15 @@ private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e
 	f_system0.push_back(u_deriv0);
 
 	std::vector<std::function<double(double, std::vector<double>)>> f_system;
-	f_system.push_back(f5);
-	f_system.push_back(f6);
+	f_system.push_back(u_derivative);
+	f_system.push_back(z_derivative);
 
 	bool fixed_h = checkBox1->Checked;
+	//						xi,      vi,    v2i, vi - v2i, ОЛП,       hi,    C1,      C2,    u'
+	std::vector<std::tuple<double, double, double, double, double, double, double, double, double>> vect2;
 
-	std::vector<std::tuple<double, double, double, double, double, double, double, double>> vect2;
+	k_zvezda = Convert::ToDouble(textBox20->Text);
+	c = Convert::ToDouble(textBox21->Text);
 
 	if (fixed_h) {
 		vect2 = RG4_fixed_system(x0, f_system0, f_system,
@@ -1746,62 +1947,50 @@ private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e
 	int i = 0;
 	dataGridView2->Rows->Clear();
 	int step = 0;
+	f1_list->Add(x0, u0);
 	for (auto& p : vect2)
 	{
 		++step;
-		//
 
 		double x = std::get<0>(p);
 		double v = std::get<1>(p);
+		double v_der = std::get<8>(p);
 		f1_list->Add(x, v);
-		//f2_list->Add(x, f2(x));
-		//
-	dataGridView2->Rows->Add();
+		f2_list->Add(x, v_der);
 
-	DataGridViewCellStyle^ sttyle = (gcnew System::Windows::Forms::DataGridViewCellStyle());
-	sttyle->Format = L"N0";
+		dataGridView2->Rows->Add();
 
-	dataGridView2->Rows[i]->Cells[0]->Style = sttyle;
-	dataGridView2->Rows[i]->Cells[0]->Value = step;
+		DataGridViewCellStyle^ sttyle = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+		sttyle->Format = L"N0";
 
-	dataGridView2->Rows[i]->Cells[1]->Value = std::get<0>(p);
-	dataGridView2->Rows[i]->Cells[2]->Value = std::get<1>(p);
-	dataGridView2->Rows[i]->Cells[3]->Value = std::get<2>(p);
-	dataGridView2->Rows[i]->Cells[4]->Value = std::get<3>(p);
-	dataGridView2->Rows[i]->Cells[5]->Value = std::get<4>(p);
-	dataGridView2->Rows[i]->Cells[6]->Value = std::get<5>(p);
-	dataGridView2->Rows[i]->Cells[7]->Value = std::get<6>(p);
-	dataGridView2->Rows[i]->Cells[8]->Value = std::get<7>(p);
+		dataGridView2->Rows[i]->Cells[0]->Style = sttyle;
+		dataGridView2->Rows[i]->Cells[0]->Value = step;
 
+		dataGridView2->Rows[i]->Cells[1]->Value = std::get<0>(p);
+		dataGridView2->Rows[i]->Cells[2]->Value = std::get<1>(p);
+		dataGridView2->Rows[i]->Cells[3]->Value = std::get<2>(p);
+		dataGridView2->Rows[i]->Cells[4]->Value = std::get<3>(p);
+		dataGridView2->Rows[i]->Cells[5]->Value = std::get<4>(p);
+		dataGridView2->Rows[i]->Cells[6]->Value = std::get<5>(p);
+		dataGridView2->Rows[i]->Cells[7]->Value = std::get<6>(p);
+		dataGridView2->Rows[i]->Cells[8]->Value = std::get<7>(p);
 
-
-
-		//dataGridView1->Rows[i]->Cells[2]->Value = floor(f2(x) * 1000) / 1000;
 		i++;
 	}
-	/*
-	for (double x = xmin; x <= xmax; x += h)
-	{
-		//
-		f1_list->Add(x, f1(x));
-		f2_list->Add(x, f2(x));
-		//
-	dataGridView2->Rows->Add();
-	dataGridView2->Rows[i]->Cells[0]->Value = x;
-	dataGridView2->Rows[i]->Cells[1]->Value = floor(f1(x) * 1000) / 1000;
-	dataGridView2->Rows[i]->Cells[2]->Value = floor(f2(x) * 1000) / 1000;
-		i++;
-	}
-	*/
-	LineItem Curve1 = panel->AddCurve("Approximate solution", f1_list, Color::Red, SymbolType::Plus);
-	//LineItem Curve2 = panel->AddCurve("F2(x)", f2_list, Color::Blue, SymbolType::None);
+	
+	LineItem Curve1 = panel->AddCurve("Approximate solution", f1_list, Color::Red, SymbolType::None);
+	LineItem Curve2 = panel_der->AddCurve("Approximate solution", f2_list, Color::Red, SymbolType::None);
 
-	// Óñòàíàâëèâàåì èíòåðåñóþùèé íàñ èíòåðâàë ïî îñè X
 	panel->XAxis->Scale->Min = xmin_limit;
 	panel->XAxis->Scale->Max = xmax_limit;
+	panel_der->XAxis->Scale->Min = xmin_limit;
+	panel_der->XAxis->Scale->Max = xmax_limit;
 
 	zedGraphControl2->AxisChange();
 	zedGraphControl2->Invalidate();
+
+	zedGraphControl3->AxisChange();
+	zedGraphControl3->Invalidate();
 
 	// Выходные данные программы:
 	int total_mult = 0;
@@ -1846,11 +2035,44 @@ private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e
 	richTextBox2->Clear();
 	richTextBox2->AppendText(String::Format(L"n = {0:F0}\r\n", step));
 	richTextBox2->AppendText(String::Format(L"b - x_n = {0:F6}\r\n", border_diff));
-	richTextBox2->AppendText(String::Format(L"max |ОЛП| = {0:F6}\r\n", max_OLP));
+	richTextBox2->AppendText(String::Format(L"max |ОЛП| = {0:E6}\r\n", max_OLP));
 	richTextBox2->AppendText(String::Format(L"Общее число удвоений шага = {0:F0}\r\n", total_mult));
 	richTextBox2->AppendText(String::Format(L"Общее число делений шага = {0:F0}\r\n", total_div));
 	richTextBox2->AppendText(String::Format(L"max h_i = {0:F6} при x = {1:F6}\r\n", max_h, max_h_x));
 	richTextBox2->AppendText(String::Format(L"min h_i = {0:F6} при x = {1:F6}\r\n", min_h, min_h_x));
+
+	// Фазовый портрет: 
+	GraphPane^ phasePane = zedGraphControl4->GraphPane;
+	phasePane->CurveList->Clear();
+	PointPairList^ phase_list = gcnew ZedGraph::PointPairList();
+	phase_list->Add(u0, u_deriv0);
+	for (auto& p : vect2)
+	{
+		double u = std::get<1>(p);        // y1 = u
+		double uprime = std::get<8>(p);   // y2 = u'
+		phase_list->Add(u, uprime);
+	}
+
+	// добавляем кривую
+	LineItem^ PhaseCurve = phasePane->AddCurve(
+		"Phase portrait (u' vs u)",
+		phase_list,
+		Color::Blue,
+		SymbolType::None);
+
+	PhaseCurve->Line->Width = 2.0f;
+
+	phasePane->XAxis->Title->Text = "u";
+	phasePane->YAxis->Title->Text = "u'";
+
+	// авто-масштаб
+	phasePane->XAxis->Scale->MinAuto = true;
+	phasePane->XAxis->Scale->MaxAuto = true;
+	phasePane->YAxis->Scale->MinAuto = true;
+	phasePane->YAxis->Scale->MaxAuto = true;
+
+	zedGraphControl4->AxisChange();
+	zedGraphControl4->Invalidate();
 }
 private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
 
